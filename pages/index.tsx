@@ -1,9 +1,12 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
+import { trpc } from '../utils/trpc'
 
 const Home: NextPage = () => {
-  return <h1>Hello world</h1>
+  const hello = trpc.useQuery(['hello', { text: 'clientt' }])
+  if (!hello.data) {
+    return <div>Loading...</div>
+  }
+  return <div>{hello.data.greeting}</div>
 }
 
 export default Home
